@@ -1,17 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 from datetime import datetime
-import os
 
 app = Flask(__name__)
 
 # Moze SMS API Configuration
-MOZE_SMS_API_BASE = "https://my.mozesms.com"
-MOZE_SMS_LOGIN_URL = f"{MOZE_SMS_API_BASE}/login"
-MOZE_SMS_SEND_URL = f"{MOZE_SMS_API_BASE}/send"  # Adjust based on actual API
-
-# Store session token after login
-session_token = None
+MOZE_SMS_API_BASE = "https://api.mozesms.com/v1/sms/bulk"
 
 @app.route('/')
 def index():
@@ -23,36 +17,56 @@ def test_connection():
     """Test connection to Moze SMS API"""
     try:
         data = request.json
-        username = data.get('username')
-        password = data.get('password')
+        bearer_token = data.get('bearer_token')
         
-        if not username or not password:
-            return jsonify({'success': False, 'error': 'Username and password required'}), 400
+        if not bearer_token:
+            return jsonify({'success': False, 'error': 'Bearer token é obrigatório'}), 400
         
-        # Test login endpoint
+        # Test with a simple request
+        headers = {
+            'Authorization': f'Bearer {bearer_token}',
+            'Content-Type': 'application/json'
+        }
+        
+        test_payload = {
+            'from': 'TEST',
+            'messages': [
+                {
+                    'to': '5511000000000',
+                    'text': 'Teste de conexão'
+                }
+            ]
+        }
+        
         response = requests.post(
-            MOZE_SMS_LOGIN_URL,
-            json={'username': username, 'password': password},
-            timeout=10,
-            headers={'Content-Type': 'application/json'}
+            MOZE_SMS_API_BASE,
+            json=test_payload,
+            headers=headers,
+            timeout=10
         )
         
-        if response.status_code in [200, 302]:
+        if response.status_code in [200, 201]:
             return jsonify({
                 'success': True,
-                'message': 'Connection successful!',
+                'message': 'Conexão bem-sucedida!',
                 'status': response.status_code
             }), 200
+        elif response.status_code == 401:
+            return jsonify({
+                'success': False,
+                'error': 'Token de autenticação inválido'
+            }), 401
         else:
             return jsonify({
                 'success': False,
-                'error': f'Login failed with status {response.status_code}'
+                'error': f'Erro na API: {response.status_code}',
+                'details': response.text
             }), response.status_code
             
     except requests.exceptions.Timeout:
-        return jsonify({'success': False, 'error': 'Connection timeout'}), 408
+        return jsonify({'success': False, 'error': 'Timeout na conexão'}), 408
     except requests.exceptions.ConnectionError:
-        return jsonify({'success': False, 'error': 'Could not connect to Moze SMS API'}), 503
+        return jsonify({'success': False, 'error': 'Não foi possível conectar à API Moze'}), 503
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
@@ -61,61 +75,69 @@ def send_sms():
     """Send SMS using Moze API"""
     try:
         data = request.json
-        username = data.get('username')
-        password = data.get('password')
+        bearer_token = data.get('bearer_token')
         phone = data.get('phone')
         message = data.get('message')
+        sender_id = data.get('sender_id', 'APP')
         
         # Validate inputs
-        if not all([username, password, phone, message]):
-            return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+        if not all([bearer_token, phone, message]):
+            return jsonify({'success': False, 'error': 'Campos obrigatórios faltando'}), 400
         
         if len(phone) < 10:
-            return jsonify({'success': False, 'error': 'Invalid phone number'}), 400
+            return jsonify({'success': False, 'error': 'Número de telefone inválido'}), 400
         
         if len(message) > 160:
-            return jsonify({'success': False, 'error': 'Message exceeds 160 characters'}), 400
+            return jsonify({'success': False, 'error': 'Mensagem exceeds 160 caracteres'}), 400
         
-        # Login first to get session
-        login_response = requests.post(
-            MOZE_SMS_LOGIN_URL,
-            json={'username': username, 'password': password},
-            timeout=10,
-            headers={'Content-Type': 'application/json'}
-        )
+        # Prepare headers with Bearer token
+        headers = {
+            'Authorization': f'Bearer {bearer_token}',
+            'Content-Type': 'application/json'
+        }
         
-        if login_response.status_code not in [200, 302]:
-            return jsonify({'success': False, 'error': 'Authentication failed'}), 401
-        
-        # Prepare SMS payload (adjust based on Moze API documentation)
+        # Prepare SMS payload according to Moze API format
         sms_payload = {
-            'to': phone,
-            'message': message,
-            'from': 'APP'  # Adjust sender ID as needed
+            'from': sender_id,
+            'messages': [
+                {
+                    'to': phone,
+                    'text': message
+                }
+            ]
         }
         
         # Send SMS
-        send_response = requests.post(
-            MOZE_SMS_SEND_URL,
+        response = requests.post(
+            MOZE_SMS_API_BASE,
             json=sms_payload,
-            timeout=10,
-            headers={
-                'Content-Type': 'application/json',
-                'Cookie': login_response.headers.get('Set-Cookie', '')
-            }
+            headers=headers,
+            timeout=10
         )
         
-        return jsonify({
-            'success': send_response.status_code in [200, 201],
-            'message': 'SMS sent successfully!' if send_response.status_code in [200, 201] else 'Failed to send SMS',
-            'status': send_response.status_code,
-            'timestamp': datetime.now().isoformat()
-        }), send_response.status_code
+        if response.status_code in [200, 201]:
+            return jsonify({
+                'success': True,
+                'message': 'SMS enviado com sucesso!',
+                'status': response.status_code,
+                'timestamp': datetime.now().isoformat()
+            }), 200
+        elif response.status_code == 401:
+            return jsonify({
+                'success': False,
+                'error': 'Token de autenticação inválido'
+            }), 401
+        else:
+            return jsonify({
+                'success': False,
+                'error': f'Erro ao enviar: {response.status_code}',
+                'details': response.text
+            }), response.status_code
         
     except requests.exceptions.Timeout:
-        return jsonify({'success': False, 'error': 'Connection timeout'}), 408
+        return jsonify({'success': False, 'error': 'Timeout na conexão'}), 408
     except requests.exceptions.ConnectionError:
-        return jsonify({'success': False, 'error': 'Could not connect to Moze SMS API'}), 503
+        return jsonify({'success': False, 'error': 'Não foi possível conectar à API Moze'}), 503
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 

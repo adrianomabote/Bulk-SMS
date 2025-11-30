@@ -1,12 +1,7 @@
 import requests
 import pytest
-import json
 
 BASE_URL = "http://localhost:5000"
-TEST_CREDENTIALS = {
-    "username": "seu_usuario",
-    "password": "sua_senha"
-}
 
 class TestMozeSMSIntegration:
     """Tests for Moze SMS sending functionality"""
@@ -26,8 +21,8 @@ class TestMozeSMSIntegration:
         assert 'Moze SMS' in response.text
         print("✓ Index page loads successfully")
     
-    def test_test_connection_missing_credentials(self):
-        """Test connection endpoint with missing credentials"""
+    def test_test_connection_missing_token(self):
+        """Test connection endpoint with missing token"""
         response = requests.post(
             f"{BASE_URL}/api/test-connection",
             json={},
@@ -36,28 +31,13 @@ class TestMozeSMSIntegration:
         assert response.status_code == 400
         data = response.json()
         assert not data['success']
-        print("✓ Missing credentials validation works")
-    
-    def test_test_connection_invalid_credentials(self):
-        """Test connection endpoint with invalid credentials"""
-        response = requests.post(
-            f"{BASE_URL}/api/test-connection",
-            json={
-                "username": "invalid_user",
-                "password": "invalid_pass"
-            },
-            timeout=10
-        )
-        # Should fail or not return 200
-        print(f"Response status: {response.status_code}")
-        print(f"Response: {response.json()}")
-        print("✓ Invalid credentials test completed")
+        print("✓ Missing token validation works")
     
     def test_send_sms_missing_fields(self):
         """Test send SMS with missing fields"""
         response = requests.post(
             f"{BASE_URL}/api/send-sms",
-            json={"username": "test"},
+            json={"bearer_token": "test"},
             timeout=5
         )
         assert response.status_code == 400
@@ -70,8 +50,7 @@ class TestMozeSMSIntegration:
         response = requests.post(
             f"{BASE_URL}/api/send-sms",
             json={
-                "username": "test",
-                "password": "test",
+                "bearer_token": "test_token",
                 "phone": "123",
                 "message": "test"
             },
@@ -80,7 +59,7 @@ class TestMozeSMSIntegration:
         assert response.status_code == 400
         data = response.json()
         assert not data['success']
-        assert 'Invalid phone' in data['error']
+        assert 'Invalid' in data['error'] or 'inválido' in data['error']
         print("✓ Invalid phone validation works")
     
     def test_send_sms_message_too_long(self):
@@ -89,8 +68,7 @@ class TestMozeSMSIntegration:
         response = requests.post(
             f"{BASE_URL}/api/send-sms",
             json={
-                "username": "test",
-                "password": "test",
+                "bearer_token": "test_token",
                 "phone": "5511999999999",
                 "message": long_message
             },
@@ -99,7 +77,7 @@ class TestMozeSMSIntegration:
         assert response.status_code == 400
         data = response.json()
         assert not data['success']
-        assert 'exceeds 160' in data['error']
+        assert '160' in data['error']
         print("✓ Message length validation works")
 
 if __name__ == "__main__":

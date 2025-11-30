@@ -192,6 +192,13 @@
             font-size: 12px;
             color: #999;
         }
+
+        .token-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 3px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -205,13 +212,14 @@
 
         <form id="smsForm">
             <div class="form-group">
-                <label for="username">Usuário Moze</label>
-                <input type="text" id="username" name="username" placeholder="seu_usuario" required>
+                <label for="bearer_token">Bearer Token</label>
+                <input type="password" id="bearer_token" name="bearer_token" placeholder="Cole seu bearer token aqui" required>
+                <div class="token-hint">Token obtido na documentação da API do Moze</div>
             </div>
 
             <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="password" placeholder="sua_senha" required>
+                <label for="sender_id">ID do Remetente (opcional)</label>
+                <input type="text" id="sender_id" name="sender_id" placeholder="APP" value="APP">
             </div>
 
             <div class="form-group">
@@ -262,11 +270,10 @@
         // Test connection
         testBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const bearerToken = document.getElementById('bearer_token').value;
 
-            if (!username || !password) {
-                showAlert('⚠️ Preencha usuário e senha', 'error');
+            if (!bearerToken) {
+                showAlert('⚠️ Cole seu Bearer Token', 'error');
                 return;
             }
 
@@ -280,7 +287,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify({ bearer_token: bearerToken })
                 });
 
                 const data = await response.json();
@@ -305,13 +312,13 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const bearerToken = document.getElementById('bearer_token').value;
             const phone = document.getElementById('phone').value;
             const message = messageInput.value;
+            const senderId = document.getElementById('sender_id').value;
 
-            if (!username || !password || !phone || !message) {
-                showAlert('⚠️ Preencha todos os campos', 'error');
+            if (!bearerToken || !phone || !message) {
+                showAlert('⚠️ Preencha todos os campos obrigatórios', 'error');
                 return;
             }
 
@@ -325,7 +332,12 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ username, password, phone, message })
+                    body: JSON.stringify({
+                        bearer_token: bearerToken,
+                        phone: phone,
+                        message: message,
+                        sender_id: senderId
+                    })
                 });
 
                 const data = await response.json();
