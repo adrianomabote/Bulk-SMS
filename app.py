@@ -1,11 +1,35 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 from datetime import datetime
+import re
 
 app = Flask(__name__)
 
 # Moze SMS API Configuration
 MOZE_SMS_API_BASE = "https://api.mozesms.com/v1/sms/bulk"
+
+def normalize_mozambique_phone(phone):
+    """Normalize Mozambique phone numbers to international format (+258...)"""
+    # Remove spaces, dashes, parentheses
+    phone = re.sub(r'[\s\-\(\)]', '', phone)
+    
+    # If it starts with +, just remove spaces
+    if phone.startswith('+'):
+        return phone
+    
+    # If it starts with 00258, replace with +258
+    if phone.startswith('00258'):
+        return '+' + phone[2:]
+    
+    # If it starts with 258, add +
+    if phone.startswith('258'):
+        return '+' + phone
+    
+    # If it's just the local number (84/82/85/86 + digits), add +258
+    if re.match(r'^[8][245]\d{7}$', phone):
+        return '+258' + phone
+    
+    return phone
 
 @app.route('/')
 def index():
@@ -84,8 +108,13 @@ def send_sms():
         if not all([bearer_token, phone, message]):
             return jsonify({'success': False, 'error': 'Campos obrigatórios faltando'}), 400
         
-        if len(phone) < 10:
-            return jsonify({'success': False, 'error': 'Número de telefone inválido'}), 400
+        # Normalize phone number for Mozambique
+        phone = normalize_mozambique_phone(phone)
+        
+        # Validate phone format (must have at least country code + operator + number)
+        phone_digits = re.sub(r'\D', '', phone)
+        if not (phone_digits.startswith('258') and len(phone_digits) >= 12):
+            return jsonify({'success': False, 'error': 'Número de telefone inválido. Use formato: +258 84 123 4567'}), 400
         
         if len(message) > 160:
             return jsonify({'success': False, 'error': 'Mensagem exceeds 160 caracteres'}), 400
