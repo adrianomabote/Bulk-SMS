@@ -199,6 +199,15 @@
             margin-top: 3px;
             font-style: italic;
         }
+
+        .error-details {
+            font-size: 11px;
+            margin-top: 8px;
+            padding: 8px;
+            background: #fff;
+            border-left: 3px solid #721c24;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -345,12 +354,16 @@
 
                 if (data.success) {
                     showAlert('✅ SMS enviado com sucesso!', 'success');
-                    statusDiv.textContent = `✅ SMS enviado às ${new Date(data.timestamp).toLocaleTimeString('pt-BR')}`;
+                    statusDiv.innerHTML = `✅ SMS enviado às ${new Date(data.timestamp).toLocaleTimeString('pt-BR')}`;
                     form.reset();
                     charCount.textContent = '0';
                 } else {
                     showAlert(`❌ Erro: ${data.error}`, 'error');
-                    statusDiv.textContent = `❌ Falha ao enviar: ${data.error}`;
+                    let detailsHtml = `❌ Falha ao enviar: ${data.error}`;
+                    if (data.details) {
+                        detailsHtml += `<div class="error-details">Detalhes: ${data.details}</div>`;
+                    }
+                    statusDiv.innerHTML = detailsHtml;
                 }
             } catch (error) {
                 showAlert('❌ Erro ao enviar SMS', 'error');

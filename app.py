@@ -156,6 +156,12 @@ def send_sms():
                 'success': False,
                 'error': 'Token de autenticação inválido'
             }), 401
+        elif response.status_code == 403:
+            return jsonify({
+                'success': False,
+                'error': 'Acesso negado (403): Token inválido, expirado ou sem permissão. Verifique suas credenciais Moze.',
+                'details': response.text
+            }), 403
         else:
             return jsonify({
                 'success': False,
