@@ -27,8 +27,16 @@ function girarRoleta() {
     
     tentativas++;
 
-    // Escolhe um prêmio aleatório
-    const indiceAleatorio = Math.floor(Math.random() * premios.length);
+    // Define o resultado: primeira = BOA SORTE, segunda = 5.000
+    let indiceAleatorio;
+    if (tentativas === 1) {
+        // Primeira tentativa: BOA SORTE (índice 6 ou 7)
+        indiceAleatorio = Math.random() < 0.5 ? 6 : 7;
+    } else {
+        // Segunda tentativa: 5.000 (índice 4)
+        indiceAleatorio = 4;
+    }
+    
     const premioAtual = premios[indiceAleatorio];
     const anguloSegmento = angulosPremios[indiceAleatorio];
     
