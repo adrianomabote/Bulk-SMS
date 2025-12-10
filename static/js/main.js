@@ -1,11 +1,109 @@
 
 let tentativas = 0;
-const premios = [10, 100, 500, 1000, 5000, 10000, "BOA SORTE", "BOA SORTE"];
-const angulosPremios = [22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5];
+
+// Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
+// A seta está na posição 3 horas (90° do topo)
+// Centro de cada segmento a partir do topo (12h) em sentido horário
+const SEGMENTOS = {
+    '500_verde': 15,        // Segmento 1
+    'BOA_SORTE_1': 45,      // Segmento 2 (vermelho superior) 
+    '500_azul': 75,         // Segmento 3
+    '10000': 105,           // Segmento 4
+    '5000_azul': 135,       // Segmento 5 - ESTE É O 5.000!
+    '1000_laranja': 165,    // Segmento 6
+    'BOA_SORTE_2': 195,     // Segmento 7 (rosa)
+    '5000_verde': 225,      // Segmento 8
+    'BOA_SORTE_3': 255,     // Segmento 9 (vermelho inferior)
+    '1000_vermelho': 285,   // Segmento 10
+    '10': 315,              // Segmento 11
+    '100': 345              // Segmento 12
+};
+
+// Audio Context para sons
+let audioContext = null;
+
+function getAudioContext() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioContext;
+}
+
+// Som de spinning (cliques rápidos)
+function playSpinSound(duration) {
+    const ctx = getAudioContext();
+    const startTime = ctx.currentTime;
+    const endTime = startTime + duration;
+    
+    let clickCount = 0;
+    const maxClicks = 60;
+    
+    function scheduleClick(time, frequency, volume) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.type = 'square';
+        osc.frequency.value = frequency;
+        
+        gain.gain.setValueAtTime(volume, time);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+        
+        osc.start(time);
+        osc.stop(time + 0.05);
+    }
+    
+    // Cria cliques que desaceleram
+    for (let i = 0; i < maxClicks; i++) {
+        const progress = i / maxClicks;
+        const delay = Math.pow(progress, 2) * duration;
+        const frequency = 800 - (progress * 400);
+        const volume = 0.3 * (1 - progress * 0.7);
+        
+        if (startTime + delay < endTime) {
+            scheduleClick(startTime + delay, frequency, volume);
+        }
+    }
+}
+
+// Som de vitória (fanfarra)
+function playVictorySound() {
+    const ctx = getAudioContext();
+    const startTime = ctx.currentTime;
+    
+    const notes = [
+        { freq: 523.25, time: 0, duration: 0.15 },
+        { freq: 659.25, time: 0.15, duration: 0.15 },
+        { freq: 783.99, time: 0.3, duration: 0.15 },
+        { freq: 1046.50, time: 0.45, duration: 0.4 },
+        { freq: 783.99, time: 0.55, duration: 0.15 },
+        { freq: 1046.50, time: 0.7, duration: 0.5 }
+    ];
+    
+    notes.forEach(note => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.type = 'sine';
+        osc.frequency.value = note.freq;
+        
+        const noteStart = startTime + note.time;
+        gain.gain.setValueAtTime(0.3, noteStart);
+        gain.gain.exponentialRampToValueAtTime(0.001, noteStart + note.duration);
+        
+        osc.start(noteStart);
+        osc.stop(noteStart + note.duration);
+    });
+}
 
 // Iniciar countdown
 function startCountdown() {
-    let timeLeft = 120; // 2 minutos
+    let timeLeft = 120;
     
     const timer = setInterval(() => {
         const minutes = Math.floor(timeLeft / 60);
@@ -23,55 +121,41 @@ function startCountdown() {
 
 function girarRoleta() {
     const roleta = document.getElementById('roleta');
-    const som = document.getElementById('roletaSom');
     
     tentativas++;
 
-    // Define o resultado: primeira = BOA SORTE, segunda = 5.000
-    let indiceAleatorio;
+    let premioAtual;
+    let anguloSegmento;
+    
     if (tentativas === 1) {
-        // Primeira tentativa: BOA SORTE (índice 6 ou 7)
-        indiceAleatorio = Math.random() < 0.5 ? 6 : 7;
+        // Primeira tentativa: BOA SORTE (segmento 2, centro em 45°)
+        premioAtual = "BOA SORTE";
+        anguloSegmento = SEGMENTOS.BOA_SORTE_1; // 45°
     } else {
-        // Segunda tentativa: 5.000 (índice 4)
-        indiceAleatorio = 4;
+        // Segunda tentativa: 5.000 (segmento 5, centro em 135°)
+        premioAtual = 5000;
+        anguloSegmento = SEGMENTOS['5000_azul']; // 135°
     }
     
-    const premioAtual = premios[indiceAleatorio];
-    const anguloSegmento = angulosPremios[indiceAleatorio];
-    
-    // Guarda o prêmio para usar no pop-up
     window.premioAtual = premioAtual;
     
-    // Calcula o ângulo final (várias voltas + ângulo do prêmio)
-    const voltasAdicionais = tentativas === 1 ? 16 : 24;
-    const anguloFinal = anguloSegmento + voltasAdicionais * 360;
-    const tempoGiro = tentativas === 1 ? 9 : 8;
+    // Calcula o ângulo de rotação: seta está em 90°, queremos que o segmento fique lá
+    // Fórmula: rotação = 90° - posição_do_segmento (+ voltas extras)
+    const voltasAdicionais = tentativas === 1 ? 8 : 12;
+    let offset = 90 - anguloSegmento;
+    if (offset < 0) offset += 360;
+    const anguloFinal = (voltasAdicionais * 360) + offset;
+    const tempoGiro = tentativas === 1 ? 7 : 6;
 
-    som.currentTime = 0;
-    som.volume = 1;
-    som.play();
+    // Toca som de spinning
+    playSpinSound(tempoGiro);
 
     roleta.style.transition = `transform ${tempoGiro}s cubic-bezier(0.1, 0.8, 0.3, 1)`;
     roleta.style.transform = `rotate(${anguloFinal}deg)`;
 
     document.getElementById('girarBtn').disabled = true;
 
-    let steps = 40;
-    let delay = (tempoGiro * 1000) / steps;
-    let stepCount = 0;
-
-    const volumeFade = setInterval(() => {
-        if (stepCount >= steps) {
-            clearInterval(volumeFade);
-        } else {
-            som.volume = Math.max(0, 1 - stepCount / steps);
-            stepCount++;
-        }
-    }, delay);
-
     setTimeout(() => {
-        som.pause();
         setTimeout(showPopUp, 500);
     }, tempoGiro * 1000);
 }
@@ -84,15 +168,14 @@ function showPopUp() {
 
     if (premioAtual === "BOA SORTE") {
         if (tentativas === 1) {
-            texto = "😅 Boa sorte próxima vez!<br>Você tem mais 1 chance.<br>Clique no botão abaixo e gire novamente!";
+            texto = "❌ Não foi dessa vez!<br>Você tem mais 1 chance.<br>Clique no botão abaixo e gire novamente!";
         } else {
             texto = "😅 Boa sorte!<br>Você esgotou suas 2 tentativas grátis.<br>Tente novamente mais tarde!";
         }
         botaoGirar.style.display = tentativas === 1 ? "inline-block" : "none";
         botaoRegistro.style.display = "none";
     } else {
-        // Tem um prêmio em dinheiro
-        const valorPremio = premioAtual;
+        const valorPremio = premioAtual.toLocaleString('pt-BR');
         
         if (tentativas === 1) {
             texto = `
@@ -112,11 +195,8 @@ function showPopUp() {
             botaoGirar.style.display = "none";
             botaoRegistro.style.display = "inline-block";
 
-            const victory = document.getElementById('victorySom');
-            victory.currentTime = 0;
-            victory.volume = 0.5;
-            victory.play();
-
+            // Toca som de vitória
+            playVictorySound();
             startConfetti();
         }
     }
@@ -132,6 +212,8 @@ function fecharPopUpEGirar() {
 }
 
 function startConfetti() {
+    if (typeof confetti === 'undefined') return;
+    
     const duration = 3 * 1000;
     const end = Date.now() + duration;
     
