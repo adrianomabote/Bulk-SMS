@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Roleta da Sorte - Gire e ganhe prêmios">
+    <title>Free Bet - Roleta da Sorte</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <section class="header-section">
+        <div class="container">
+            <p class="intro-text">Tens 2 tentativas grátis para girar a roleta. Não custa nada, clique no botão girar!</p>
+        </div>
+    </section>
+
+    <!-- Roleta -->
+    <section class="roulette-section">
+        <div class="container">
+            <h2>🎯 Tente a sua sorte! 🎯</h2>
+            <p>Clique no botão e gire a roleta para ganhar prêmios!</p>
+            
+            <div class="roulette-container">
+                <img src="/static/images/roleta.png" alt="Roleta" id="roleta">
+                <div class="roulette-pointer"></div>
+            </div>
+
+            <div class="button-container">
+                <button id="girarBtn" onclick="girarRoleta()">🎲 GIRAR</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timer -->
+    <section class="timer-section">
+        <div class="container">
+            <p class="timer-text">⏳ <em>Você tem 01:59 para girar e garantir sua chance gratuita!</em></p>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span id="minutes">02</span>
+                    <label>Minutos</label>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds">00</span>
+                    <label>Segundos</label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Informações -->
+    <section class="info-section">
+        <div class="container">
+            <h3>Chegou sua vez de ganhar!</h3>
+            <ul>
+                <li>Para começar, basta apertar o botão dourado escrito <strong>GIRAR</strong>!</li>
+                <li>💡 <strong>Você tem 2 tentativas totalmente grátis!</strong></li>
+                <li>A roleta está cheia de prêmios esperando por você!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Prêmios -->
+    <section class="prizes-section">
+        <div class="container">
+            <h3>🎁 <strong>Prêmios da Roleta da Sorte</strong></h3>
+            <ul class="prizes-list">
+                <li>✅ <strong>10 Meticais</strong> – Comece com sorte!</li>
+                <li>✅ <strong>100 Meticais</strong> – Já dá pra comemorar!</li>
+                <li>✅ <strong>500 Meticais</strong> – Subindo o nível!</li>
+                <li>✅ <strong>1.000 Meticais</strong> – Agora sim!</li>
+                <li>✅ <strong>5.000 Meticais</strong> – Sorte grande!</li>
+                <li>✅ <strong>10.000 Meticais</strong> – O prêmio dos sonhos! 💸</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Compartilhar -->
+    <section class="share-section">
+        <div class="container">
+            <h2>🔁 GANHE MAIS GIROS GRÁTIS!</h2>
+            <p>Compartilhe o site com seus amigos e ganhe <strong>+1 giro grátis</strong> a cada pessoa!</p>
+            
+            <div class="share-box">
+                <p>💬 Frase pronta para enviar:</p>
+                <input id="shareText" type="text" readonly value="🚀 Acabei de girar uma roleta e ganhei um prêmio! Você também pode ganhar até 10.000 MT grátis. Entra aqui: https://free-bet.vercel.app">
+                <button onclick="copyText()">📋 Copiar mensagem</button>
+            </div>
+
+            <a href="https://api.whatsapp.com/send?text=%F0%9F%9A%80%20Acabei%20de%20girar%20uma%20roleta%20e%20ganhei%20um%20pr%C3%AAmio!%20Voc%C3%AA%20tamb%C3%A9m%20pode%20ganhar%20at%C3%A9%2010.000%20MT%20gr%C3%A1tis.%20Entra%20aqui:%20https://free-bet.vercel.app" target="_blank" class="whatsapp-btn">
+                📲 Compartilhar no WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Termos de Uso e Direitos Reservados</strong></p>
+        <p><em>© 2025 Free Bet – Todos os direitos reservados.</em></p>
+        <p class="disclaimer">A presente simulação interativa tem como principal finalidade o estímulo à participação em ofertas promocionais vinculadas a plataformas externas. Os valores exibidos na roleta não representam prêmios efetivamente creditáveis.</p>
+    </footer>
+
+    <!-- Pop-up -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h3>🎉 Resultado 🎉</h3>
+            <p id="popupText"></p>
+            <button id="girarNovamente" onclick="fecharPopUpEGirar()">🔁 Girar Novamente</button>
+            <a id="popupButton" href="https://media1.placard.co.mz/redirect.aspx?pid=7663&bid=1690" target="_blank">💰 REGISTRE-SE AGORA!</a>
+        </div>
+    </div>
+
+    <!-- Áudios -->
+    <audio id="roletaSom" src="/static/media/Roleta.mp3"></audio>
+    <audio id="victorySom" src="/static/media/Celebration.mp3" preload="auto"></audio>
+
+    <script src="/static/js/confetti.browser.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

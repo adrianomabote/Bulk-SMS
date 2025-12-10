@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import requests
 from datetime import datetime
 import re
@@ -35,6 +35,11 @@ def normalize_mozambique_phone(phone):
 def index():
     """Serve the SMS sending page"""
     return render_template('index.html')
+
+@app.route('/roleta')
+def roleta():
+    """Serve the roulette game page"""
+    return send_from_directory('static', 'index.html')
 
 @app.route('/api/test-connection', methods=['POST'])
 def test_connection():
