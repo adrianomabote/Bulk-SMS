@@ -80,6 +80,30 @@
         </div>
     </section>
 
+    <!-- Botão de Compartilhar Fixo -->
+    <button class="share-button-fixed" onclick="abrirCompartilhar()">
+        📲 COMPARTILHAR
+    </button>
+
+    <!-- Modal de Compartilhar -->
+    <div id="shareModal" class="share-modal">
+        <div class="share-modal-content">
+            <span class="close-share" onclick="fecharCompartilhar()">&times;</span>
+            <h2>🔁 GANHE MAIS GIROS GRÁTIS!</h2>
+            <p>Compartilhe o site com seus amigos e ganhe <strong>+1 giro grátis</strong> a cada pessoa!</p>
+            
+            <div class="share-box">
+                <p>💬 Frase pronta para enviar:</p>
+                <input id="shareText" type="text" readonly value="🚀 Acabei de girar uma roleta e ganhei um prêmio! Você também pode ganhar até 10.000 MT grátis. Entra aqui: https://roleta-da-sorte.onrender.com/">
+                <button onclick="copyText()">📋 Copiar mensagem</button>
+            </div>
+
+            <a href="https://api.whatsapp.com/send?text=%F0%9F%9A%80%20Acabei%20de%20girar%20uma%20roleta%20e%20ganhei%20um%20pr%C3%AAmio!%20Voc%C3%AA%20tamb%C3%A9m%20pode%20ganhar%20at%C3%A9%2010.000%20MT%20gr%C3%A1tis.%20Entra%20aqui:%20https://roleta-da-sorte.onrender.com/" target="_blank" class="whatsapp-btn">
+                📲 Compartilhar no WhatsApp
+            </a>
+        </div>
+    </div>
+
     <!-- Compartilhar -->
     <section class="share-section">
         <div class="container">
