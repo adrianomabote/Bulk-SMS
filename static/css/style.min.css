@@ -576,8 +576,8 @@ footer p {
 }
 
 .winners-dots .dot {
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background-color: #ccc;
     cursor: pointer;
@@ -588,5 +588,5 @@ footer p {
 .winners-dots .dot.active {
     background-color: #2ecc71;
     box-shadow: 0 2px 8px rgba(46, 204, 113, 0.6);
-    transform: scale(1.15);
+    transform: scale(1.2);
 }
