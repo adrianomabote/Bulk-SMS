@@ -198,30 +198,31 @@ body {
 
 /* Share */
 .share-section {
-    background: #000;
+    background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
     padding: 20px 20px;
+    text-align: center;
 }
 
 .share-section .container {
-    background: #1a1a1a;
-    border: 2px solid #333;
-    padding: 20px 15px;
-    border-radius: 12px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
     max-width: 450px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .share-section h2 {
-    color: #fff;
+    color: #f39c12;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 18px;
 }
 
 .share-section > .container > p {
     text-align: center;
     margin-bottom: 15px;
-    color: #ccc;
+    color: #fff;
     font-size: 13px;
 }
 
