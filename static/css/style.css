@@ -314,8 +314,23 @@ footer {
     margin: 10px 0;
 }
 
+.result-message .warning-text {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.result-message .share-info {
+    color: #333;
+}
+
+.result-message .bonus-text {
+    color: #333;
+    margin-top: 10px;
+}
+
 .share-now-btn {
-    display: inline-block;
+    display: block;
     margin-top: 20px;
     background: #25D366;
     color: white;
@@ -327,4 +342,6 @@ footer {
     font-weight: bold;
     font-size: 14px;
     width: 100%;
+    box-sizing: border-box;
+    text-align: center;
 }
