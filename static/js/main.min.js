@@ -358,8 +358,38 @@ function iniciarNotificacoes() {
     setTimeout(mostrarNotificacao, 11000);
 }
 
-// Iniciar notificações quando a página carrega
+// Função para scroll dos vencedores
+let winnersScrollPos = 0;
+
+function scrollToWinner(index) {
+    const scroll = document.getElementById('winnersScroll');
+    const itemWidth = scroll.querySelector('.winner-item').offsetWidth;
+    scroll.scrollLeft = index * (itemWidth + 20);
+    updateDots(index);
+}
+
+function updateDots(activeIndex) {
+    const dots = document.querySelectorAll('.winners-dots .dot');
+    dots.forEach((dot, index) => {
+        if (index === activeIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+// Detectar scroll automático dos vencedores
 document.addEventListener('DOMContentLoaded', function() {
+    const scroll = document.getElementById('winnersScroll');
+    if (scroll) {
+        scroll.addEventListener('scroll', function() {
+            const itemWidth = scroll.querySelector('.winner-item').offsetWidth;
+            const activeIndex = Math.round(scroll.scrollLeft / (itemWidth + 20));
+            updateDots(activeIndex);
+        });
+    }
+    
     habilitarBotao();
     startCountdown();
     iniciarNotificacoes();
