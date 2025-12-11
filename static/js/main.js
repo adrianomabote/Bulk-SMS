@@ -1,6 +1,18 @@
 
 let tentativas = 0;
 
+// Verifica se o usuário já clicou em registrar
+function verificarRegistro() {
+    if (localStorage.getItem('jaRegistrou')) {
+        tentativas = 0;
+        localStorage.removeItem('jaRegistrou');
+    }
+}
+
+function marcarRegistro() {
+    localStorage.setItem('jaRegistrou', 'true');
+}
+
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
 // A seta está na posição 3 horas (90° do topo)
 // Centro de cada segmento a partir do topo (12h) em sentido horário
@@ -233,4 +245,8 @@ function copyText() {
 }
 
 // Iniciar countdown ao carregar a página
-document.addEventListener('DOMContentLoaded', startCountdown);
+document.addEventListener('DOMContentLoaded', function() {
+    verificarRegistro();
+    startCountdown();
+    document.getElementById('girarBtn').disabled = false;
+});
