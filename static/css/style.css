@@ -162,12 +162,20 @@ body {
     margin: 8px 0;
 }
 
-.info-section .santa-video {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 15px;
-    display: block;
+.video-container {
+    border: 3px solid #f39c12;
     border-radius: 8px;
+    padding: 8px;
+    margin: 20px auto;
+    max-width: 300px;
+    background-color: #111;
+}
+
+.info-section .santa-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
 }
 
 /* Prizes */
