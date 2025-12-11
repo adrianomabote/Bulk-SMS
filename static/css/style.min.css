@@ -228,10 +228,11 @@ body {
 }
 
 .info-box {
-    border: 1px solid #222;
+    border: 1px solid transparent;
     padding: 20px;
     border-radius: 8px;
     display: inline-block;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .info-title {
