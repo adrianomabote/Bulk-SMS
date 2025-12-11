@@ -379,54 +379,6 @@ function updateDots(activeIndex) {
     });
 }
 
-// Navegação por seções
-const sections = [
-    { id: 'winnersSection', name: 'Vencedores' },
-    { id: 'rouletteSection', name: 'Roleta' },
-    { id: 'prizesSection', name: 'Prêmios' },
-    { id: 'shareSection', name: 'Compartilhar' }
-];
-
-function scrollToSection(index) {
-    if (index >= 0 && index < sections.length) {
-        const section = document.querySelector('.' + getClassFromIndex(index));
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-            updatePageDots(index);
-        }
-    }
-}
-
-function getClassFromIndex(index) {
-    const classes = ['winners-section', 'roulette-section', 'prizes-section', 'share-section'];
-    return classes[index] || '';
-}
-
-function updatePageDots(activeIndex) {
-    const dots = document.querySelectorAll('.page-dot');
-    dots.forEach((dot, index) => {
-        if (index === activeIndex) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', function() {
-    let activeIndex = 0;
-    const sections_els = document.querySelectorAll('.winners-section, .roulette-section, .prizes-section, .share-section');
-    
-    sections_els.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 2) {
-            activeIndex = index;
-        }
-    });
-    
-    updatePageDots(activeIndex);
-});
-
 // Detectar scroll automático dos vencedores
 document.addEventListener('DOMContentLoaded', function() {
     const scroll = document.getElementById('winnersScroll');
