@@ -246,20 +246,16 @@ function copyText() {
 
 // Habilita o botão de girar ao voltar
 function habilitarBotao() {
-    tentativas = localStorage.getItem('tentativas') ? parseInt(localStorage.getItem('tentativas')) : 0;
+    tentativas = 0;
+    localStorage.removeItem('tentativas');
     var btn = document.getElementById('girarBtn');
+    btn.disabled = false;
+    btn.textContent = '🎲 GIRAR';
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+    document.getElementById('popup').style.display = 'none';
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
-    
-    if (tentativas >= 2) {
-        mostrarSemGiros();
-    } else {
-        btn.disabled = false;
-        btn.textContent = '🎲 GIRAR';
-        btn.style.opacity = '1';
-        btn.style.cursor = 'pointer';
-        document.getElementById('popup').style.display = 'none';
-    }
 }
 
 // Mostra mensagem de sem giros
