@@ -273,3 +273,58 @@ footer {
 #popupButton {
     display: none;
 }
+
+/* Result Dialog After Registration */
+.result-dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+}
+
+.result-dialog-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.result-dialog-content h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.result-message {
+    margin: 20px 0;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.result-message p {
+    margin: 10px 0;
+}
+
+.share-now-btn {
+    display: inline-block;
+    margin-top: 20px;
+    background: #25D366;
+    color: white;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    width: 100%;
+}

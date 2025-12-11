@@ -1,5 +1,6 @@
 
 let tentativas = localStorage.getItem('tentativas') ? parseInt(localStorage.getItem('tentativas')) : 0;
+let userRegistered = localStorage.getItem('userRegistered') === 'true';
 
 function salvarTentativas() {
     localStorage.setItem('tentativas', tentativas);
@@ -7,6 +8,8 @@ function salvarTentativas() {
 
 function fecharPopupERegistrar() {
     document.getElementById('popup').style.display = 'none';
+    localStorage.setItem('userRegistered', 'true');
+    userRegistered = true;
     tentativas = 0;
     localStorage.removeItem('tentativas');
 }
@@ -260,14 +263,25 @@ function habilitarBotao() {
 
 // Mostra mensagem de sem giros
 function mostrarSemGiros() {
-    document.getElementById('popupText').innerHTML = `
-        😔 <b>Você já usou suas 2 tentativas grátis!</b><br><br>
-        Registre-se na plataforma para ganhar novas chances de girar e receber prêmios!
-    `;
-    document.getElementById('girarNovamente').style.display = 'none';
-    document.getElementById('popupButton').style.display = 'inline-block';
-    document.getElementById('popup').style.display = 'block';
+    if (userRegistered) {
+        // Mostra o dialog de compartilhamento após registro
+        document.getElementById('resultDialog').style.display = 'block';
+    } else {
+        // Mostra o popup pedindo para registrar
+        document.getElementById('popupText').innerHTML = `
+            😔 <b>Você já usou suas 2 tentativas grátis!</b><br><br>
+            Registre-se na plataforma para ganhar novas chances de girar e receber prêmios!
+        `;
+        document.getElementById('girarNovamente').style.display = 'none';
+        document.getElementById('popupButton').style.display = 'inline-block';
+        document.getElementById('popup').style.display = 'block';
+    }
     document.getElementById('girarBtn').disabled = true;
+}
+
+// Fecha o result dialog
+function fecharResultDialog() {
+    document.getElementById('resultDialog').style.display = 'none';
 }
 
 // Marca que o usuário saiu da página
@@ -279,6 +293,13 @@ window.addEventListener('beforeunload', function() {
 document.addEventListener('DOMContentLoaded', function() {
     habilitarBotao();
     startCountdown();
+    
+    // Fecha o result dialog ao clicar fora dele
+    document.getElementById('resultDialog').addEventListener('click', function(e) {
+        if (e.target === this) {
+            fecharResultDialog();
+        }
+    });
 });
 
 // Quando volta pelo botão voltar do navegador
