@@ -198,21 +198,21 @@ body {
 
 /* Share */
 .share-section {
-    background: #f5f5f5;
+    background: #000;
     padding: 20px 20px;
 }
 
 .share-section .container {
-    background: #fff;
+    background: #1a1a1a;
     border: 2px solid #333;
     padding: 20px 15px;
     border-radius: 12px;
     max-width: 450px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .share-section h2 {
-    color: #333;
+    color: #fff;
     text-align: center;
     margin-bottom: 10px;
     font-size: 18px;
@@ -221,37 +221,39 @@ body {
 .share-section > .container > p {
     text-align: center;
     margin-bottom: 15px;
-    color: #666;
+    color: #ccc;
     font-size: 13px;
 }
 
 .share-box {
-    background: #f9f9f9;
-    color: #333;
+    background: #222;
+    color: #fff;
     padding: 12px;
     border-radius: 8px;
     margin: 12px 0;
-    border: 1px solid #ddd;
+    border: 1px solid #444;
 }
 
 .share-box p {
     font-size: 12px;
     margin-bottom: 8px;
-    color: #666;
+    color: #aaa;
 }
 
 .share-box input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #444;
     border-radius: 6px;
     margin: 6px 0;
     font-size: 11px;
+    background: #333;
+    color: #fff;
 }
 
 .share-box button {
     width: 100%;
-    background: #333;
+    background: #f39c12;
     border: none;
     color: white;
     padding: 10px;
@@ -263,7 +265,7 @@ body {
 
 .whatsapp-btn {
     display: block;
-    background: #333;
+    background: #25D366;
     color: white;
     text-align: center;
     padding: 12px 15px;
