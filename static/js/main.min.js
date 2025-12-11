@@ -258,25 +258,16 @@ function inicializarPagina() {
     carregarTentativas();
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
+    document.getElementById('popup').style.display = 'none';
     
     // Verifica se já usou os 2 giros
     if (tentativas >= 2) {
-        mostrarSemGiros();
+        document.getElementById('girarBtn').disabled = true;
+        document.getElementById('girarBtn').textContent = '❌ Sem giros';
     } else {
         document.getElementById('girarBtn').disabled = false;
+        document.getElementById('girarBtn').textContent = '🎲 GIRAR';
     }
-}
-
-// Mostra mensagem de sem giros
-function mostrarSemGiros() {
-    document.getElementById('popupText').innerHTML = `
-        😔 <b>Você já usou suas 2 tentativas grátis!</b><br><br>
-        Registre-se na plataforma para ganhar novas chances de girar e receber prêmios!
-    `;
-    document.getElementById('girarNovamente').style.display = 'none';
-    document.getElementById('popupButton').style.display = 'inline-block';
-    document.getElementById('popup').style.display = 'block';
-    document.getElementById('girarBtn').disabled = true;
 }
 
 // Iniciar countdown ao carregar a página
@@ -287,7 +278,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Quando volta pelo botão voltar do navegador
 window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-        inicializarPagina();
-    }
+    inicializarPagina();
 });
