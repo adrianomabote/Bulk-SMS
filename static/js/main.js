@@ -324,3 +324,37 @@ window.addEventListener('pageshow', function(event) {
         habilitarBotao();
     }
 });
+
+// Notificações de pessoas girando
+const nomes = ['João', 'Maria', 'Pedro', 'Ana', 'Carlos', 'Sofia', 'Bruno', 'Juliana', 'Felipe', 'Amanda'];
+const premios = ['10 MT', '100 MT', '500 MT', '1.000 MT', '5.000 MT', '10.000 MT', 'BOA SORTE'];
+
+function mostrarNotificacao() {
+    const nome = nomes[Math.floor(Math.random() * nomes.length)];
+    const premio = premios[Math.floor(Math.random() * premios.length)];
+    const mensagem = `${nome} acabou de ganhar ${premio}!`;
+    
+    const notif = document.createElement('div');
+    notif.className = 'notification';
+    notif.textContent = mensagem;
+    document.body.appendChild(notif);
+    
+    setTimeout(() => {
+        notif.remove();
+    }, 5000);
+}
+
+// Mostrar notificações aleatoriamente a cada 8-15 segundos
+function iniciarNotificacoes() {
+    setInterval(() => {
+        const delay = Math.random() * 7000 + 8000; // 8-15 segundos
+        setTimeout(mostrarNotificacao, delay);
+    }, 15000);
+}
+
+// Iniciar notificações quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    habilitarBotao();
+    startCountdown();
+    iniciarNotificacoes();
+});
