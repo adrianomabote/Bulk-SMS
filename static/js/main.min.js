@@ -173,11 +173,12 @@ function showPopUp() {
     if (premioAtual === "BOA SORTE") {
         if (tentativas === 1) {
             texto = "❌ Não foi dessa vez!<br>Você tem mais 1 chance.<br>Clique no botão abaixo e gire novamente!";
+            botaoGirar.style.display = "inline-block";
+            botaoRegistro.style.display = "none";
         } else {
-            texto = "😅 Boa sorte!<br>Você esgotou suas 2 tentativas grátis.<br>Tente novamente mais tarde!";
+            mostrarSemGiros();
+            return;
         }
-        botaoGirar.style.display = tentativas === 1 ? "inline-block" : "none";
-        botaoRegistro.style.display = "none";
     } else {
         const valorPremio = premioAtual.toLocaleString('pt-BR');
         
@@ -236,7 +237,7 @@ function copyText() {
     alert("Mensagem copiada! Agora cole no WhatsApp ou SMS.");
 }
 
-// Habilita o botão de girar
+// Habilita o botão de girar ao voltar
 function habilitarBotao() {
     tentativas = 0;
     document.getElementById('girarBtn').disabled = false;
@@ -244,6 +245,18 @@ function habilitarBotao() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
+}
+
+// Mostra mensagem de sem giros
+function mostrarSemGiros() {
+    document.getElementById('popupText').innerHTML = `
+        😔 <b>Você já usou suas 2 tentativas grátis!</b><br><br>
+        Registre-se na plataforma para ganhar novas chances de girar e receber prêmios!
+    `;
+    document.getElementById('girarNovamente').style.display = 'none';
+    document.getElementById('popupButton').style.display = 'inline-block';
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('girarBtn').disabled = true;
 }
 
 // Iniciar ao carregar a página
