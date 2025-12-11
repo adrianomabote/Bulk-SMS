@@ -241,11 +241,33 @@ function copyText() {
     alert("Mensagem copiada! Agora cole no WhatsApp ou SMS.");
 }
 
-// Iniciar countdown ao carregar a página
-document.addEventListener('DOMContentLoaded', function() {
+// Reseta tudo ao carregar a página
+function inicializarPagina() {
     resetarTentativas();
-    startCountdown();
     document.getElementById('girarBtn').disabled = false;
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
+    document.getElementById('popup').style.display = 'none';
+}
+
+// Iniciar countdown ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarPagina();
+    startCountdown();
 });
+
+// Quando volta pelo botão voltar do navegador
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        inicializarPagina();
+    }
+});
+
+// Também verifica periodicamente se o botão está desabilitado indevidamente
+setInterval(function() {
+    var popup = document.getElementById('popup');
+    var btn = document.getElementById('girarBtn');
+    if (popup.style.display === 'none' || popup.style.display === '') {
+        btn.disabled = false;
+    }
+}, 500);
