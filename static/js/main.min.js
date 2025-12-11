@@ -133,6 +133,12 @@ function startCountdown() {
 }
 
 function girarRoleta() {
+    // Se o usuário já se registrou, mostrar o diálogo de compartilhamento
+    if (userRegistered) {
+        mostrarSemGiros();
+        return;
+    }
+    
     const roleta = document.getElementById('roleta');
     
     tentativas++;
