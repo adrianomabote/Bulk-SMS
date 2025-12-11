@@ -332,16 +332,18 @@ const premios = ['10 MT', '100 MT', '500 MT', '1.000 MT', '5.000 MT', '10.000 MT
 function mostrarNotificacao() {
     const nome = nomes[Math.floor(Math.random() * nomes.length)];
     const premio = premios[Math.floor(Math.random() * premios.length)];
-    const mensagem = `${nome} acabou de ganhar ${premio}!`;
+    const mensagem = `✅ ${nome} acabou de ganhar ${premio}!`;
     
     const notif = document.createElement('div');
     notif.className = 'notification';
     notif.textContent = mensagem;
     document.body.appendChild(notif);
     
+    console.log('Notificação exibida:', mensagem);
+    
     setTimeout(() => {
         notif.remove();
-    }, 5000);
+    }, 8000);
 }
 
 // Mostrar apenas 3 notificações com timings específicos
@@ -349,11 +351,11 @@ function iniciarNotificacoes() {
     // Primeira notificação: imediatamente (0 segundos)
     mostrarNotificacao();
     
-    // Segunda notificação: depois de 3 segundos
-    setTimeout(mostrarNotificacao, 3000);
-    
-    // Terceira notificação: depois de 4 segundos adicionais (7 segundos total)
+    // Segunda notificação: depois de 7 segundos
     setTimeout(mostrarNotificacao, 7000);
+    
+    // Terceira notificação: depois de 4 segundos adicionais (11 segundos total)
+    setTimeout(mostrarNotificacao, 11000);
 }
 
 // Iniciar notificações quando a página carrega
