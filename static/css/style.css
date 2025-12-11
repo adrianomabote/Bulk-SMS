@@ -162,6 +162,22 @@ body {
     margin: 8px 0;
 }
 
+.info-section .santa-image {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 /* Prizes */
 .prizes-section {
     background-color: #000;
