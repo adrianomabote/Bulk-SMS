@@ -1,13 +1,24 @@
 
 let tentativas = 0;
 
-// Sempre reseta as tentativas ao carregar a página
-function resetarTentativas() {
-    tentativas = 0;
+// Carrega tentativas salvas
+function carregarTentativas() {
+    const salvo = localStorage.getItem('tentativas');
+    if (salvo) {
+        tentativas = parseInt(salvo);
+    }
+}
+
+// Salva tentativas
+function salvarTentativas() {
+    localStorage.setItem('tentativas', tentativas);
 }
 
 function fecharPopupERegistrar() {
     document.getElementById('popup').style.display = 'none';
+    // Reseta tentativas após registrar
+    tentativas = 0;
+    localStorage.removeItem('tentativas');
 }
 
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
@@ -132,6 +143,7 @@ function girarRoleta() {
     const roleta = document.getElementById('roleta');
     
     tentativas++;
+    salvarTentativas();
 
     let premioAtual;
     let anguloSegmento;
@@ -241,13 +253,30 @@ function copyText() {
     alert("Mensagem copiada! Agora cole no WhatsApp ou SMS.");
 }
 
-// Reseta tudo ao carregar a página
+// Inicializa a página
 function inicializarPagina() {
-    resetarTentativas();
-    document.getElementById('girarBtn').disabled = false;
+    carregarTentativas();
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
-    document.getElementById('popup').style.display = 'none';
+    
+    // Verifica se já usou os 2 giros
+    if (tentativas >= 2) {
+        mostrarSemGiros();
+    } else {
+        document.getElementById('girarBtn').disabled = false;
+    }
+}
+
+// Mostra mensagem de sem giros
+function mostrarSemGiros() {
+    document.getElementById('popupText').innerHTML = `
+        😔 <b>Você já usou suas 2 tentativas grátis!</b><br><br>
+        Registre-se na plataforma para ganhar novas chances de girar e receber prêmios!
+    `;
+    document.getElementById('girarNovamente').style.display = 'none';
+    document.getElementById('popupButton').style.display = 'inline-block';
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('girarBtn').disabled = true;
 }
 
 // Iniciar countdown ao carregar a página
@@ -262,12 +291,3 @@ window.addEventListener('pageshow', function(event) {
         inicializarPagina();
     }
 });
-
-// Também verifica periodicamente se o botão está desabilitado indevidamente
-setInterval(function() {
-    var popup = document.getElementById('popup');
-    var btn = document.getElementById('girarBtn');
-    if (popup.style.display === 'none' || popup.style.display === '') {
-        btn.disabled = false;
-    }
-}, 500);
