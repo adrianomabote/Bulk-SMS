@@ -43,17 +43,12 @@ body {
 }
 
 .winners-scroll::-webkit-scrollbar {
-    height: 4px;
+    display: none;
 }
 
-.winners-scroll::-webkit-scrollbar-track {
-    background: #333;
-    border-radius: 10px;
-}
-
-.winners-scroll::-webkit-scrollbar-thumb {
-    background: #f39c12;
-    border-radius: 10px;
+.winners-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .winner-item {
