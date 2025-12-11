@@ -230,9 +230,9 @@ body {
 .info-box {
     border: 1px solid #555;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     display: inline-block;
-    background-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #333 0%, #444 100%);
 }
 
 .info-title {
