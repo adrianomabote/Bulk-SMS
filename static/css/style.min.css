@@ -165,7 +165,7 @@ body {
 
 /* Prizes */
 .prizes-section {
-    background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+    background-color: #000;
     color: #fff;
     padding: 35px 20px;
     text-align: center;
