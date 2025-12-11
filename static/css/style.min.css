@@ -575,17 +575,17 @@ footer p {
 }
 
 .winners-dots .dot {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background-color: #2ecc71;
+    background-color: #ccc;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(46, 204, 113, 0.4);
+    box-shadow: none;
 }
 
 .winners-dots .dot.active {
-    background-color: #27ae60;
-    box-shadow: 0 2px 12px rgba(46, 204, 113, 0.8);
-    transform: scale(1.2);
+    background-color: #2ecc71;
+    box-shadow: 0 2px 8px rgba(46, 204, 113, 0.6);
+    transform: scale(1.1);
 }
