@@ -12,11 +12,6 @@ function fecharPopupERegistrar() {
     userRegistered = true;
     tentativas = 0;
     localStorage.removeItem('tentativas');
-    
-    // Mostrar o diálogo de compartilhamento imediatamente após registrar
-    setTimeout(function() {
-        mostrarSemGiros();
-    }, 500);
 }
 
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
