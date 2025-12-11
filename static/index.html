@@ -23,34 +23,45 @@
     <section class="winners-section">
         <div class="container">
             <h2 class="winners-title">Melhores Vencedores de 2025</h2>
-            <div class="winners-grid">
-                <div class="winner-card">
-                    <div class="winner-photo">
-                        <img src="/static/images/vicente.jpg" alt="Vicente">
+            <p class="winners-subtitle">Deslize para ver mais vencedores</p>
+            <div class="winners-carousel-wrapper">
+                <div class="winners-carousel" id="winnersCarousel">
+                    <div class="winner-card">
+                        <div class="winner-badge">1</div>
+                        <div class="winner-photo">
+                            <img src="/static/images/vicente.jpg" alt="Vicente">
+                        </div>
+                        <div class="winner-info">
+                            <h3 class="winner-name">Vicente</h3>
+                            <p class="winner-prize">5.000 MT</p>
+                        </div>
                     </div>
-                    <div class="winner-info">
-                        <h3 class="winner-name">Vicente</h3>
-                        <p class="winner-prize">5.000 MT</p>
+                    <div class="winner-card featured">
+                        <div class="winner-badge">2</div>
+                        <div class="winner-photo">
+                            <img src="/static/images/amelia.jpg" alt="Amélia">
+                        </div>
+                        <div class="winner-info">
+                            <h3 class="winner-name">Amélia</h3>
+                            <p class="winner-prize">10.000 MT</p>
+                        </div>
+                    </div>
+                    <div class="winner-card featured">
+                        <div class="winner-badge">3</div>
+                        <div class="winner-photo">
+                            <img src="/static/images/lucas.jpg" alt="Lucas">
+                        </div>
+                        <div class="winner-info">
+                            <h3 class="winner-name">Lucas</h3>
+                            <p class="winner-prize">10.000 MT</p>
+                        </div>
                     </div>
                 </div>
-                <div class="winner-card">
-                    <div class="winner-photo">
-                        <img src="/static/images/amelia.jpg" alt="Amélia">
-                    </div>
-                    <div class="winner-info">
-                        <h3 class="winner-name">Amélia</h3>
-                        <p class="winner-prize">10.000 MT</p>
-                    </div>
-                </div>
-                <div class="winner-card">
-                    <div class="winner-photo">
-                        <img src="/static/images/lucas.jpg" alt="Lucas">
-                    </div>
-                    <div class="winner-info">
-                        <h3 class="winner-name">Lucas</h3>
-                        <p class="winner-prize">10.000 MT</p>
-                    </div>
-                </div>
+            </div>
+            <div class="carousel-dots">
+                <span class="dot active" onclick="scrollToWinner(0)"></span>
+                <span class="dot" onclick="scrollToWinner(1)"></span>
+                <span class="dot" onclick="scrollToWinner(2)"></span>
             </div>
         </div>
     </section>
@@ -177,6 +188,40 @@
 
     <script src="/static/js/confetti.browser.min.js"></script>
     <script src="/static/js/main.min.js"></script>
+    <script>
+        function scrollToWinner(index) {
+            const carousel = document.getElementById('winnersCarousel');
+            const cards = carousel.querySelectorAll('.winner-card');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (cards[index]) {
+                const cardWidth = cards[index].offsetWidth + 15;
+                carousel.scrollTo({
+                    left: index * cardWidth,
+                    behavior: 'smooth'
+                });
+            }
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('winnersCarousel');
+            const dots = document.querySelectorAll('.dot');
+            
+            carousel.addEventListener('scroll', function() {
+                const cardWidth = carousel.querySelector('.winner-card').offsetWidth + 15;
+                const scrollPosition = carousel.scrollLeft;
+                const activeIndex = Math.round(scrollPosition / cardWidth);
+                
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === activeIndex);
+                });
+            });
+        });
+    </script>
     <style>
         * {
             -webkit-user-select: none !important;
