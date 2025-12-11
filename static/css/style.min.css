@@ -227,6 +227,13 @@ body {
     color: #f39c12;
 }
 
+.info-title {
+    border: 2px solid #333;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
 .info-section ul {
     list-style: none;
     line-height: 1.8;
