@@ -1,24 +1,8 @@
 
 let tentativas = 0;
 
-// Carrega tentativas salvas
-function carregarTentativas() {
-    const salvo = localStorage.getItem('tentativas');
-    if (salvo) {
-        tentativas = parseInt(salvo);
-    }
-}
-
-// Salva tentativas
-function salvarTentativas() {
-    localStorage.setItem('tentativas', tentativas);
-}
-
 function fecharPopupERegistrar() {
     document.getElementById('popup').style.display = 'none';
-    // Reseta tentativas após registrar
-    tentativas = 0;
-    localStorage.removeItem('tentativas');
 }
 
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
@@ -143,7 +127,6 @@ function girarRoleta() {
     const roleta = document.getElementById('roleta');
     
     tentativas++;
-    salvarTentativas();
 
     let premioAtual;
     let anguloSegmento;
@@ -253,30 +236,35 @@ function copyText() {
     alert("Mensagem copiada! Agora cole no WhatsApp ou SMS.");
 }
 
-// Inicializa a página
-function inicializarPagina() {
-    carregarTentativas();
+// Habilita o botão de girar
+function habilitarBotao() {
+    tentativas = 0;
+    document.getElementById('girarBtn').disabled = false;
+    document.getElementById('girarBtn').textContent = '🎲 GIRAR';
+    document.getElementById('popup').style.display = 'none';
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
-    document.getElementById('popup').style.display = 'none';
-    
-    // Verifica se já usou os 2 giros
-    if (tentativas >= 2) {
-        document.getElementById('girarBtn').disabled = true;
-        document.getElementById('girarBtn').textContent = '❌ Sem giros';
-    } else {
-        document.getElementById('girarBtn').disabled = false;
-        document.getElementById('girarBtn').textContent = '🎲 GIRAR';
-    }
 }
 
-// Iniciar countdown ao carregar a página
+// Iniciar ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
-    inicializarPagina();
+    habilitarBotao();
     startCountdown();
 });
 
 // Quando volta pelo botão voltar do navegador
 window.addEventListener('pageshow', function(event) {
-    inicializarPagina();
+    habilitarBotao();
+});
+
+// Quando a janela ganha foco (usuário voltou)
+window.addEventListener('focus', function() {
+    habilitarBotao();
+});
+
+// Quando a página fica visível novamente
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+        habilitarBotao();
+    }
 });
