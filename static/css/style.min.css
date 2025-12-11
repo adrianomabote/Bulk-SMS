@@ -38,8 +38,10 @@ body {
     overflow-x: auto;
     scroll-behavior: smooth;
     gap: 20px;
-    padding: 10px 0;
+    padding: 10px 0 10px 0;
     margin-bottom: 10px;
+    margin-left: -20px;
+    padding-left: 20px;
 }
 
 .winners-scroll::-webkit-scrollbar {
