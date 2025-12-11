@@ -166,8 +166,8 @@ body {
     border: 3px solid #f39c12;
     border-radius: 8px;
     padding: 8px;
-    margin: 20px auto;
-    max-width: 300px;
+    margin: 20px auto 30px auto;
+    max-width: 500px;
     background-color: #111;
 }
 
