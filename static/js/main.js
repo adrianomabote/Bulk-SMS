@@ -304,6 +304,7 @@ function mostrarSemGiros() {
 // Fecha o result dialog
 function fecharResultDialog() {
     document.getElementById('resultDialog').style.display = 'none';
+    document.getElementById('girarBtn').disabled = false;
 }
 
 // Marca que o usuário saiu da página
