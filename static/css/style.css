@@ -129,31 +129,37 @@ body {
 
 /* Info Section */
 .info-section {
+    background: #f5f5f5;
+    padding: 35px 20px;
+}
+
+.info-section .container {
     background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: #fff;
-    padding: 35px 20px;
+    padding: 25px 20px;
+    border-radius: 15px;
+    max-width: 450px;
+    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
 }
 
 .info-section h3 {
     text-align: center;
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 .info-section ul {
     list-style: none;
-    line-height: 2;
+    line-height: 1.8;
     padding: 0;
-    max-width: 400px;
-    margin: 0 auto;
+    margin: 0;
 }
 
 .info-section ul li {
-    font-size: 15px;
-    margin: 10px 0;
-    background: rgba(255,255,255,0.2);
-    padding: 12px 15px;
+    font-size: 14px;
+    margin: 8px 0;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.15);
     border-radius: 8px;
 }
 
@@ -192,22 +198,29 @@ body {
 
 /* Share */
 .share-section {
-    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-    color: #fff;
+    background: #1a1a1a;
     padding: 35px 20px;
+}
+
+.share-section .container {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    padding: 25px 20px;
+    border-radius: 15px;
+    max-width: 450px;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
 }
 
 .share-section h2 {
     color: #fff;
     text-align: center;
     margin-bottom: 15px;
-    font-size: 22px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    font-size: 20px;
 }
 
 .share-section > .container > p {
     text-align: center;
     margin-bottom: 20px;
+    color: #fff;
 }
 
 .share-box {
@@ -215,15 +228,21 @@ body {
     color: #333;
     padding: 15px;
     border-radius: 10px;
-    margin: 20px 0;
+    margin: 15px 0;
+}
+
+.share-box p {
+    font-size: 13px;
+    margin-bottom: 8px;
 }
 
 .share-box input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    margin: 10px 0;
+    margin: 8px 0;
+    font-size: 12px;
 }
 
 .share-box button {
@@ -231,37 +250,24 @@ body {
     background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     border: none;
     color: white;
-    padding: 14px;
+    padding: 12px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
     font-size: 14px;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.share-box button:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .whatsapp-btn {
     display: block;
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-    color: white;
+    background: #fff;
+    color: #25D366;
     text-align: center;
-    padding: 16px 20px;
-    border-radius: 12px;
+    padding: 14px 20px;
+    border-radius: 10px;
     font-weight: bold;
     text-decoration: none;
-    margin-top: 20px;
-    font-size: 16px;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.whatsapp-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    margin-top: 15px;
+    font-size: 15px;
 }
 
 /* Footer */
