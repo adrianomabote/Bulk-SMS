@@ -13,6 +13,11 @@ function marcarRegistro() {
     localStorage.setItem('jaRegistrou', 'true');
 }
 
+function fecharPopupERegistrar() {
+    document.getElementById('popup').style.display = 'none';
+    marcarRegistro();
+}
+
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
 // A seta está na posição 3 horas (90° do topo)
 // Centro de cada segmento a partir do topo (12h) em sentido horário
