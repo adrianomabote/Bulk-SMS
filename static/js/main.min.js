@@ -1,21 +1,13 @@
 
 let tentativas = 0;
 
-// Verifica se o usuário já clicou em registrar
-function verificarRegistro() {
-    if (localStorage.getItem('jaRegistrou')) {
-        tentativas = 0;
-        localStorage.removeItem('jaRegistrou');
-    }
-}
-
-function marcarRegistro() {
-    localStorage.setItem('jaRegistrou', 'true');
+// Sempre reseta as tentativas ao carregar a página
+function resetarTentativas() {
+    tentativas = 0;
 }
 
 function fecharPopupERegistrar() {
     document.getElementById('popup').style.display = 'none';
-    marcarRegistro();
 }
 
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
@@ -251,7 +243,9 @@ function copyText() {
 
 // Iniciar countdown ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
-    verificarRegistro();
+    resetarTentativas();
     startCountdown();
     document.getElementById('girarBtn').disabled = false;
+    document.getElementById('roleta').style.transition = 'none';
+    document.getElementById('roleta').style.transform = 'rotate(0deg)';
 });
