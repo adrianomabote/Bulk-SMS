@@ -344,12 +344,16 @@ function mostrarNotificacao() {
     }, 5000);
 }
 
-// Mostrar notificações aleatoriamente a cada 8-15 segundos
+// Mostrar apenas 3 notificações com timings específicos
 function iniciarNotificacoes() {
-    setInterval(() => {
-        const delay = Math.random() * 7000 + 8000; // 8-15 segundos
-        setTimeout(mostrarNotificacao, delay);
-    }, 15000);
+    // Primeira notificação: imediatamente (0 segundos)
+    mostrarNotificacao();
+    
+    // Segunda notificação: depois de 3 segundos
+    setTimeout(mostrarNotificacao, 3000);
+    
+    // Terceira notificação: depois de 4 segundos adicionais (7 segundos total)
+    setTimeout(mostrarNotificacao, 7000);
 }
 
 // Iniciar notificações quando a página carrega
