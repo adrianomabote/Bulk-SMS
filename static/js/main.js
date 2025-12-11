@@ -12,6 +12,11 @@ function fecharPopupERegistrar() {
     userRegistered = true;
     tentativas = 0;
     localStorage.removeItem('tentativas');
+    
+    // Muda o botão para o segundo estilo (sem emoji)
+    var btn = document.getElementById('girarBtn');
+    btn.textContent = 'GIRAR';
+    btn.disabled = false;
 }
 
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
@@ -259,12 +264,18 @@ function habilitarBotao() {
     localStorage.removeItem('tentativas');
     var btn = document.getElementById('girarBtn');
     btn.disabled = false;
-    btn.textContent = '🎲 GIRAR';
     btn.style.opacity = '1';
     btn.style.cursor = 'pointer';
     document.getElementById('popup').style.display = 'none';
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
+    
+    // Atualiza o texto do botão baseado no estado de registro
+    if (userRegistered) {
+        btn.textContent = 'GIRAR';
+    } else {
+        btn.textContent = '🎲 GIRAR';
+    }
 }
 
 // Mostra mensagem de sem giros
