@@ -231,6 +231,11 @@ function showPopUp() {
     document.getElementById('popup').style.display = 'block';
 }
 
+function fecharPopup() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('girarBtn').disabled = false;
+}
+
 function fecharPopUpEGirar() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('girarBtn').disabled = false;
