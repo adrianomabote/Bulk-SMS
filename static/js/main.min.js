@@ -1,8 +1,14 @@
 
-let tentativas = 0;
+let tentativas = localStorage.getItem('tentativas') ? parseInt(localStorage.getItem('tentativas')) : 0;
+
+function salvarTentativas() {
+    localStorage.setItem('tentativas', tentativas);
+}
 
 function fecharPopupERegistrar() {
     document.getElementById('popup').style.display = 'none';
+    tentativas = 0;
+    localStorage.removeItem('tentativas');
 }
 
 // Mapeamento da roleta (12 segmentos de 30° cada, começando do topo em sentido horário)
@@ -127,6 +133,7 @@ function girarRoleta() {
     const roleta = document.getElementById('roleta');
     
     tentativas++;
+    salvarTentativas();
 
     let premioAtual;
     let anguloSegmento;
@@ -239,12 +246,20 @@ function copyText() {
 
 // Habilita o botão de girar ao voltar
 function habilitarBotao() {
-    tentativas = 0;
-    document.getElementById('girarBtn').disabled = false;
-    document.getElementById('girarBtn').textContent = '🎲 GIRAR';
-    document.getElementById('popup').style.display = 'none';
+    tentativas = localStorage.getItem('tentativas') ? parseInt(localStorage.getItem('tentativas')) : 0;
+    var btn = document.getElementById('girarBtn');
     document.getElementById('roleta').style.transition = 'none';
     document.getElementById('roleta').style.transform = 'rotate(0deg)';
+    
+    if (tentativas >= 2) {
+        mostrarSemGiros();
+    } else {
+        btn.disabled = false;
+        btn.textContent = '🎲 GIRAR';
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        document.getElementById('popup').style.display = 'none';
+    }
 }
 
 // Mostra mensagem de sem giros
@@ -259,6 +274,11 @@ function mostrarSemGiros() {
     document.getElementById('girarBtn').disabled = true;
 }
 
+// Marca que o usuário saiu da página
+window.addEventListener('beforeunload', function() {
+    localStorage.setItem('saiu_pagina', 'true');
+});
+
 // Iniciar ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
     habilitarBotao();
@@ -267,17 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Quando volta pelo botão voltar do navegador
 window.addEventListener('pageshow', function(event) {
-    habilitarBotao();
-});
-
-// Quando a janela ganha foco (usuário voltou)
-window.addEventListener('focus', function() {
-    habilitarBotao();
-});
-
-// Quando a página fica visível novamente
-document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible') {
+    if (event.persisted) {
         habilitarBotao();
     }
 });
