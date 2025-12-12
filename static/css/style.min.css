@@ -302,6 +302,10 @@ body {
     color: #fff;
 }
 
+.prizes-list li strong {
+    color: #f39c12;
+}
+
 
 /* Share */
 .share-section {
