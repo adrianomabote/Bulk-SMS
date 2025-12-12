@@ -8,7 +8,7 @@
 body {
     font-family: 'Poppins', Arial, sans-serif;
     background-color: #f5f5f5;
-    color: #333;
+    color: #1a1a2e;
 }
 
 .container {
@@ -19,7 +19,7 @@ body {
 
 /* Winners Section */
 .winners-section {
-    background-color: #1a1a2e;
+    background-color: #000;
     padding: 15px 20px 5px 20px;
     color: #fff;
     text-align: center;
@@ -70,7 +70,7 @@ body {
     border: 3px solid #f39c12;
     overflow: hidden;
     margin: 0 auto 10px;
-    background: #333;
+    background: #1a1a2e;
 }
 
 .winner-photo-circle img {
@@ -228,11 +228,11 @@ body {
 }
 
 .info-box {
-    border: 1px solid #555;
+    border: 1px solid #1a1a2e;
     padding: 20px;
     border-radius: 10px;
     display: inline-block;
-    background: linear-gradient(135deg, #333 0%, #444 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #1a1a2e 100%);
 }
 
 .info-title {
@@ -294,10 +294,10 @@ body {
 }
 
 .prizes-list li {
-    background: linear-gradient(135deg, #333 0%, #444 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #1a1a2e 100%);
     padding: 15px 10px;
     border-radius: 10px;
-    border: 1px solid #555;
+    border: 1px solid #1a1a2e;
     font-size: 14px;
 }
 
@@ -309,8 +309,8 @@ body {
 }
 
 .share-section .container {
-    background: linear-gradient(135deg, #333 0%, #444 100%);
-    border: 1px solid #555;
+    background: linear-gradient(135deg, #1a1a2e 0%, #1a1a2e 100%);
+    border: 1px solid #1a1a2e;
     padding: 20px 15px;
     border-radius: 10px;
     max-width: 450px;
@@ -336,19 +336,19 @@ body {
     padding: 12px;
     border-radius: 8px;
     margin: 12px 0;
-    border: 1px solid #444;
+    border: 1px solid #1a1a2e;
 }
 
 .share-box p {
     font-size: 12px;
     margin-bottom: 8px;
-    color: #aaa;
+    color: #1a1a2e;
 }
 
 .share-box input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #444;
+    border: 1px solid #1a1a2e;
     border-radius: 6px;
     margin: 6px 0;
     font-size: 11px;
@@ -384,7 +384,7 @@ body {
 /* Footer */
 footer {
     background-color: #111;
-    color: #999;
+    color: #1a1a2e;
     text-align: center;
     padding: 25px 20px;
     font-size: 12px;
@@ -477,7 +477,7 @@ footer p {
     right: 15px;
     font-size: 28px;
     font-weight: bold;
-    color: #666;
+    color: #1a1a2e;
     cursor: pointer;
     line-height: 1;
 }
@@ -550,17 +550,17 @@ footer p {
 }
 
 .result-message .warning-text {
-    color: #333;
+    color: #1a1a2e;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
 .result-message .share-info {
-    color: #333;
+    color: #1a1a2e;
 }
 
 .result-message .bonus-text {
-    color: #333;
+    color: #1a1a2e;
     margin-top: 10px;
 }
 
