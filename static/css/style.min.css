@@ -228,11 +228,11 @@ body {
 }
 
 .info-box {
-    border: 1px solid #555;
+    border: 1px solid #1a1a2e;
     padding: 20px;
     border-radius: 10px;
     display: inline-block;
-    background: linear-gradient(135deg, #1a1a2e 0%, #444 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #1a1a2e 100%);
 }
 
 .info-title {
@@ -294,10 +294,10 @@ body {
 }
 
 .prizes-list li {
-    background: linear-gradient(135deg, #1a1a2e 0%, #444 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #1a1a2e 100%);
     padding: 15px 10px;
     border-radius: 10px;
-    border: 1px solid #555;
+    border: 1px solid #1a1a2e;
     font-size: 14px;
 }
 
@@ -309,8 +309,8 @@ body {
 }
 
 .share-section .container {
-    background: linear-gradient(135deg, #1a1a2e 0%, #444 100%);
-    border: 1px solid #555;
+    background: linear-gradient(135deg, #1a1a2e 0%, #1a1a2e 100%);
+    border: 1px solid #1a1a2e;
     padding: 20px 15px;
     border-radius: 10px;
     max-width: 450px;
@@ -336,7 +336,7 @@ body {
     padding: 12px;
     border-radius: 8px;
     margin: 12px 0;
-    border: 1px solid #444;
+    border: 1px solid #1a1a2e;
 }
 
 .share-box p {
@@ -348,7 +348,7 @@ body {
 .share-box input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #444;
+    border: 1px solid #1a1a2e;
     border-radius: 6px;
     margin: 6px 0;
     font-size: 11px;
@@ -384,7 +384,7 @@ body {
 /* Footer */
 footer {
     background-color: #111;
-    color: #999;
+    color: #1a1a2e;
     text-align: center;
     padding: 25px 20px;
     font-size: 12px;
