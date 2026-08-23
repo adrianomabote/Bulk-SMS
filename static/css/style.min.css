@@ -534,6 +534,7 @@ footer p {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    animation: heartbeat 1.5s ease-in-out infinite;
 }
 
 @keyframes heartbeat {
