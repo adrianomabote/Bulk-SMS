@@ -189,10 +189,7 @@ function showPopUp() {
     let texto = "";
     const botaoGirar = document.getElementById('girarNovamente');
     const botaoRegistro = document.getElementById('popupButton');
-    const botaoVoltar = document.getElementById('voltarPopup');
     const premioAtual = window.premioAtual;
-
-    botaoVoltar.style.display = "none";
 
     if (premioAtual === "BOA SORTE") {
         if (tentativas === 1) {
@@ -223,7 +220,6 @@ function showPopUp() {
             `;
             botaoGirar.style.display = "none";
             botaoRegistro.style.display = "inline-block";
-            botaoVoltar.style.display = "inline-block";
 
             // Toca som de vitória
             playVictorySound();
@@ -300,7 +296,6 @@ function mostrarSemGiros() {
         `;
         document.getElementById('girarNovamente').style.display = 'none';
         document.getElementById('popupButton').style.display = 'inline-block';
-        document.getElementById('voltarPopup').style.display = 'inline-block';
         document.getElementById('popup').style.display = 'block';
     }
     document.getElementById('girarBtn').disabled = true;
@@ -310,6 +305,19 @@ function mostrarSemGiros() {
 function fecharResultDialog() {
     document.getElementById('resultDialog').style.display = 'none';
     document.getElementById('girarBtn').disabled = false;
+}
+
+function voltarParaParabens() {
+    document.getElementById('resultDialog').style.display = 'none';
+    document.getElementById('popupText').innerHTML = `
+        🤑 Parabéns! Você ganhou <b>${(window.premioAtual || 5000).toLocaleString('pt-BR')} Meticais!</b><br><br>
+        Para receber, registre-se na plataforma clicando no botão abaixo e <b>deposite 10 ou 20 Meticais</b> para que possamos confirmar seu número e enviar o valor.<br><br>
+        ⚠️ <b>O prêmio só será entregue para quem criar uma nova conta na plataforma.</b><br>
+        Se já possui uma conta, é necessário criar uma nova para receber o valor na sua carteira móvel!
+    `;
+    document.getElementById('girarNovamente').style.display = 'none';
+    document.getElementById('popupButton').style.display = 'inline-block';
+    document.getElementById('popup').style.display = 'block';
 }
 
 // Marca que o usuário saiu da página

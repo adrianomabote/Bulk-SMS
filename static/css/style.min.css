@@ -523,12 +523,6 @@ footer p {
     animation: heartbeat 1.5s ease-in-out infinite;
 }
 
-#voltarPopup {
-    display: none;
-    background: #6c757d;
-    margin-top: 10px;
-}
-
 .result-back-btn {
     display: block;
     width: 100%;
