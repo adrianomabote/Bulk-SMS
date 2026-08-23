@@ -526,6 +526,8 @@ footer p {
 .result-back-btn {
     display: block;
     width: 100%;
+    margin-top: 15px;
+    background: orange;
     color: white;
     padding: 12px 24px;
     border: none;
