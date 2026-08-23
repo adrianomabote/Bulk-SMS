@@ -189,7 +189,10 @@ function showPopUp() {
     let texto = "";
     const botaoGirar = document.getElementById('girarNovamente');
     const botaoRegistro = document.getElementById('popupButton');
+    const botaoVoltar = document.getElementById('voltarPopup');
     const premioAtual = window.premioAtual;
+
+    botaoVoltar.style.display = "none";
 
     if (premioAtual === "BOA SORTE") {
         if (tentativas === 1) {
@@ -214,12 +217,13 @@ function showPopUp() {
         } else {
             texto = `
                 🤑 Parabéns! Você ganhou <b>${valorPremio} Meticais!</b><br><br>
-                Para receber, registre-se na plataforma clicando no botão abaixo e <b>deposite 1 ou 100 Meticais</b> para que possamos confirmar seu número e enviar o valor.<br><br>
+                Para receber, registre-se na plataforma clicando no botão abaixo e <b>deposite 10 ou 20 Meticais</b> para que possamos confirmar seu número e enviar o valor.<br><br>
                 ⚠️ <b>O prêmio só será entregue para quem criar uma nova conta na plataforma.</b><br>
                 Se já possui uma conta, é necessário criar uma nova para receber o valor na sua carteira móvel!
             `;
             botaoGirar.style.display = "none";
             botaoRegistro.style.display = "inline-block";
+            botaoVoltar.style.display = "inline-block";
 
             // Toca som de vitória
             playVictorySound();
@@ -296,6 +300,7 @@ function mostrarSemGiros() {
         `;
         document.getElementById('girarNovamente').style.display = 'none';
         document.getElementById('popupButton').style.display = 'inline-block';
+        document.getElementById('voltarPopup').style.display = 'inline-block';
         document.getElementById('popup').style.display = 'block';
     }
     document.getElementById('girarBtn').disabled = true;
